@@ -20,7 +20,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t amir1adel/pipeline:1.0 .'
+                sh 'docker build -t amir1adel/pipeline:1.0 EcommerceApp/.'
             }
         }
         stage('Remove Existing Docker Container') {
@@ -38,8 +38,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GitHubCreds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login ghcr.io -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    sh 'docker push ghcr.io/yourdockerregistry/yourapp:latest'
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker push amir1adel/pipeline:1.0'
                 }
             }
         }
